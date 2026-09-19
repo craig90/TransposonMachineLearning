@@ -21,7 +21,6 @@ def remove_problematic_rows(df_raw):
             problematic_entries += 1
             rows_to_remove.append(row.Index)
         
-
     return (df_raw.drop(index=rows_to_remove))
 
 
@@ -43,7 +42,7 @@ def fix_ambigious_nucleotides(df_partial):
                 sequence_list.append(random_nuc)
 
         new_seq_str = "".join(sequence_list)
-        df_partial.at[row.Index, row.sequence_content] = new_seq_str
+        df_partial.at[row.Index, "sequence_content"] = new_seq_str
 
     return (df_partial)
 
@@ -60,6 +59,6 @@ df_processed = fix_ambigious_nucleotides(df_partial)
 
 print(len(df_processed))
 
-
+# df_processed.to_csv('TE_feature_extraction_dataset_pre-processed.csv')
 
 
