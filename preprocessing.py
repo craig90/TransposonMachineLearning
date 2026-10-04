@@ -49,7 +49,7 @@ def fix_ambigious_nucleotides(df_partial):
 
 
 
-df_raw = pd.read_csv('TE_feature_extraction_dataset.csv')
+df_raw = pd.read_csv('data/TE_feature_extraction_dataset.csv')
 
 print(df_raw.head())
 print(len(df_raw))
@@ -58,6 +58,8 @@ df_partial = remove_problematic_rows(df_raw)
 df_processed = fix_ambigious_nucleotides(df_partial)
 
 print(len(df_processed))
+
+df_processed.to_parquet("data/preprocessed.parquet")
 
 # df_processed.to_csv('TE_feature_extraction_dataset_pre-processed.csv')
 
