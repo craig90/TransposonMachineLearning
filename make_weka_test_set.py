@@ -18,6 +18,7 @@ df_merged = df_merged.drop(columns="Sequence_ID")
 
 df_merged.rename(columns={"TE_Order":"Final_Class"}, inplace=True)
 print(df_merged.head())
+print(df_merged["Final_Class"].value_counts())
 
 
 df_merged.to_csv("PreprocessedForWeka/TE_FINAL_tester_for_weka.csv", index=False)

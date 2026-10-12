@@ -11,6 +11,8 @@ feature extacted datasets to be used in Weka:
 
 In order to obtain preprocessed and feature extracted dataset:
 
+Install TE-Atlas python libaries in a python venv
+
 1. Run TE-Atlas part 2 with full training csv:
 FINAL_TE_feature_extraction_dataset_without_maverickpolintona.csv
 
@@ -33,7 +35,7 @@ since part 1 is not being run with for this ML setup
 
 Thankfully the dataset is smaller so feature extraction runs in a reasonable amount of time.
 
-3. For accuracy info, run the classify_compare script which is in the TE-Atlas repo
+3. For accuracy info, run the Classify/classify_compare script which is in the TE-Atlas repo
 
 
 ######
