@@ -49,3 +49,11 @@ make_weka_train_set.py to output a dataset that can go into weka.
 TE-Atlas pipeline back to !FINAL_DROSO_GREENLAND_STRONGYL_tester.csv to re-add the class names 
 which get stripped in the TE_Atlas pipeline.  Then the sequence number and sequence content need to be dropped.
 So do this by running make_weka_test_set.py
+
+3. The testing sets seem to not work as csvs, so load them into Weka as .csv and then save as .arff, then
+reload the .arff file to use for test classification.
+
+## General
+
+There is a gaussian_noise.py script that can be used to augment datasets with certain transposon classes
+with more sequeneces.
