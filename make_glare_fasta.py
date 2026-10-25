@@ -1,4 +1,4 @@
-""" usage python3 make_glare_fasta.py input.csv outputfilename"""
+""" usage python3 make_glare_fasta.py input.csv outputfilename [max_seqs]"""
 
 import sys
 
@@ -18,11 +18,16 @@ ORDER_TO_GLARE = {
 }
 
 csv_path, fasta = sys.argv[1], sys.argv[2]
+max_seqs = int(sys.argv[3]) if len(sys.argv) > 3 else None
 
 df = pd.read_csv(csv_path)
 
 # I'm going to remove the Simple_Repeat because it's not in my training set
 df = df[df["TE_Order"] != "Simple_Repeat"]
+
+# random subset for a smaller test run, fixed seed so it's the same each time
+if max_seqs is not None and max_seqs < len(df):
+    df = df.sample(n=max_seqs, random_state=42)
 
 # can't have spaces or # in sequence id in glare fasta file
 df["glare_id"] = df["Sequence_ID"].astype(str).str.replace(r"[\s#]+", "_", regex=True)
