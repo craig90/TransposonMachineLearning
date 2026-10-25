@@ -1,3 +1,5 @@
+""" usage python3 make_glare_fasta.py input.csv outputfilename"""
+
 import sys
 
 import pandas as pd
@@ -20,7 +22,7 @@ csv_path, fasta = sys.argv[1], sys.argv[2]
 df = pd.read_csv(csv_path)
 
 # I'm going to remove the Simple_Repeat because it's not in my training set
-df = df[df["TE_ORDER"] != "Simple_Repeat"]
+df = df[df["TE_Order"] != "Simple_Repeat"]
 
 # can't have spaces or # in sequence id in glare fasta file
 df["glare_id"] = df["Sequence_ID"].astype(str).str.replace(r"[\s#]+", "_", regex=True)
@@ -36,4 +38,4 @@ unmapped = df.loc[df["glare_order"].isna(), "TE_Order"].unique()
 if(len(unmapped)):
     print("Count not convert the following TE_Orders to Glare orders", list(unmapped))
 
-df[["glare_id", "Sequence_ID", "TE_Order", "true_order"]].to_csv(f"{csv_path}_labels.csv", index=False)
+df[["glare_id", "Sequence_ID", "TE_Order", "glare_order"]].to_csv(f"{fasta}_labels.csv", index=False)
