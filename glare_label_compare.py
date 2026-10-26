@@ -38,6 +38,9 @@ disp = ConfusionMatrixDisplay.from_predictions(
 )
 disp.ax_.set_title(f"GLARE accuracy {df_merged['correct'].mean():.1%}")
 
+# anchor the end of each rotated label to its tick so long labels don't spill under the next column
+plt.setp(ax.get_xticklabels(), ha="right", rotation_mode="anchor")
+
 # gridlines between cells
 ax.set_xticks([x + 0.5 for x in range(len(labels) - 1)], minor=True)
 ax.set_yticks([y + 0.5 for y in range(len(labels) - 1)], minor=True)
