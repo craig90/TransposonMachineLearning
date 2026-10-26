@@ -4,7 +4,7 @@ import sys
 
 import matplotlib.pyplot as plt
 import pandas as pd
-from sklearn.metrics import ConfusionMatrixDisplay
+from sklearn.metrics import ConfusionMatrixDisplay, f1_score
 
 
 predictions_csv, labels_csv = sys.argv[1], sys.argv[2]
@@ -24,6 +24,9 @@ correctly_classified = df_merged["correct"].sum() / classified_count
 
 print("Accuracy among non-unknown:", correctly_classified)
 
+
+f1 = f1_score(df_merged["glare_order"], df_merged["pred_order"], average="weighted", zero_division=0)
+print("F1 score: ", f1)
 # print(pd.crosstab(df_merged["glare_order"], df_merged["pred_order"]))
 
 # confusion matrix
