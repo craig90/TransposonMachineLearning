@@ -57,3 +57,22 @@ reload the .arff file to use for test classification.
 
 There is a gaussian_noise.py script that can be used to augment datasets with certain transposon classes
 with more sequeneces.
+
+
+### For GLARE:
+
+The test set !FINAL_DROSCO_GREENLAND_STRONGYL_tester.csv can be run through GLARE,
+this is what to do to run it
+
+1. Clone the GLARE repo and setup a venv with the correct dependencies.  The GLARE README 
+talks about using Linux with an NVIDEA graphics card and using pixi, but it can be 
+run without these on a Macbook.  Just make sure all the library versions match.
+
+2. Run make_glare_fasta.py, which turns the csv into a fasta but also creates a csv with
+labels for comparison afterwards
+
+3. Run glare predict, view the settings in their README.. Set --threshold 0.
+This is kind of slow, even with the ~600 sequence test set it took 15 minutes to run on an M4 Macbook.
+
+4. Run glare_label_compare.py which takes the output from GLARE and combines it with the labels from
+make_glare_fasta.py and creates a confusion matrix.
