@@ -35,7 +35,7 @@ since part 1 is not being run with for this ML setup
 
 Thankfully the dataset is smaller so feature extraction runs in a reasonable amount of time.
 
-3. For accuracy info, run the Classify/classify_compare script which is in the TE-Atlas repo
+3. For accuracy info and other metrics, run classify_compare.py script
 
 
 ######

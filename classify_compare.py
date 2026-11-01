@@ -52,6 +52,10 @@ print(df_merged.columns)
 f1 = f1_score(df_merged["TE_Order"], df_merged["Predicted_Class"], average="weighted", zero_division=0)
 print("F1 score: ", f1)
 
+# makes the confusion matrix cleaner
+df_merged.loc[df_merged["TE_Order"] == "Penelope-like Element/PLE", "TE_Order"] = "PLE"
+df_merged.loc[df_merged["Predicted_Class"] == "Penelope-like Element/PLE", "Predicted_Class"] = "PLE"
+
 y_true = df_merged["TE_Order"]
 y_pred = df_merged["Predicted_Class"].fillna("UNKNOWN")
 labels = sorted(set(y_true) | set(y_pred))
