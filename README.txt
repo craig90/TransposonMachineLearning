@@ -75,4 +75,8 @@ labels for comparison afterwards
 This is kind of slow, even with the ~600 sequence test set it took 15 minutes to run on an M4 Macbook.
 
 4. Run glare_label_compare.py which takes the output from GLARE and combines it with the labels from
-make_glare_fasta.py and creates a confusion matrix.
+make_glare_fasta.py and creates a confusion matrix and other statistics.
+
+## Reconstruct dataset using GLARE datasets.
+
+1. Download Repbase and PanTEon. 

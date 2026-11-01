@@ -1,9 +1,8 @@
 """
-usage with GLARE venv running:
-export_glare_test_set.py PANTEON_FASTA REPBASE_DIR OUT_DIR
+../GLARE/.venv/bin/python create_glare_test_set.py PANTEON_FASTA REPBASE_DIR OUT_DIR
 
 PanTEon is stored as a fasta file PANTEON_FASTA
-while Repbase is stored in a dir as REPABASE_DIR
+while Repbase is stored in a dir as REPBASE_DIR
 
 Recreates GLARE's test set by calling GLARE's own loading/splitting code with
 the settings from
@@ -22,8 +21,22 @@ from pathlib import Path
 import pandas as pd
 import yaml
 
-# update dir as necessary
-GLARE_DIR = Path("../GLARE/")
+# translates the Order labels back from GLARE to what TE-Atlas wants
+GLARE_TO_TE_ATLAS = {
+    "LTR": "LTR",
+    "LINE": "Non-LTR/LINE",
+    "SINE": "SINE",
+    "TIR": "TIR",
+    "HELITRON": "Helitron",
+    "CRYPTON": "Crypton",
+    "DIRS": "DIRS",
+    "MAVERICK": "Maverick",
+    # "Maverick/Polinton": "MAVERICK",
+    "PLE": "Penelope-like Element/PLE",
+}
+
+# GLARE repo is expected next to this parent's folder - edit if it different spot
+GLARE_DIR = Path(__file__).resolve().parent.parent / "GLARE"
 
 sys.path.insert(0, str(GLARE_DIR))
 
@@ -38,7 +51,7 @@ out_dir.mkdir(parents=True, exist_ok=True)
 with open(CONFIG) as fh:
     config = yaml.safe_load(fh)
 
-# update the config for the local non GLARE fill setup since the directories are different
+# update the config for the local non GLARE setup since the directories are different
 data_config = dict(config["data"])
 data_config["repbase_dir"] = repbase_dir
 data_config["fasta_path"] = panteon_fasta
@@ -60,7 +73,7 @@ train_recs, val_recs, test_sets, _diagnostics = build_combined_repbase_panteon_r
 
 print(f"train: {len(train_recs)}  val: {len(val_recs)}  (paper: 282,046 / 31,339)")
 
-# test_sets contains dicts for both panteon and repabase
+# test_sets contains dicts for both panteon and repbase
 all_tests = []
 for test_name, records in test_sets.items():
     df = pd.DataFrame(records)
@@ -80,22 +93,21 @@ combined = pd.concat(all_tests, ignore_index=True)
 combined.to_csv(out_dir / "glare_test_set_combined.csv", index=False)
 print(f"combined: {len(combined)} records -> {out_dir / 'glare_test_set_combined.csv'}")
 
-df_all_tests = pd.DataFrame(all_tests)
+# create csvs for TE-Atlas
+# remove the orders that are not in TE-Atlas
+combined = combined[~combined["order"].isin(["SATELLITE", "STRUCTURAL_RNA"])]
+
 df_for_TE_atlas = pd.DataFrame()
-df_for_TE_atlas["Sequence_ID"] = df_all_tests["id"]
-df_for_TE_atlas["sequence_content"] = df_all_tests["sequence"]
-df_for_TE_atlas["TE_Order"] = df_all_tests["order"]
+df_for_TE_atlas["Sequence_ID"] = combined["id"]
+df_for_TE_atlas["sequence_content"] = combined["sequence"]
+df_for_TE_atlas["TE_Order"] = combined["order"].map(GLARE_TO_TE_ATLAS)
+
+assert df_for_TE_atlas["TE_Order"].notna().all(), combined.loc[df_for_TE_atlas["TE_Order"].isna(), "order"].unique()
 
 df_for_TE_atlas.to_csv(out_dir / "glare_test_set_combined_for_TE_atlas.csv", index=False)
-df_for_TE_atlas = df_for_TE_atlas.head(1000)
+df_1000 = df_for_TE_atlas.sample(n=1000, random_state=42)
 
-df_for_TE_atlas.to_csv(out_dir / "glare_test_set_combined_for_TE_atlas_1000_seq.csv", index=False)
+df_1000.to_csv(out_dir / "glare_test_set_combined_for_TE_atlas_1000_seq.csv", index=False)
 
 print(f"created te-atlas csv with: {len(df_for_TE_atlas)} records -> {out_dir / 'glare_test_set_combined_for_TE_atlas.csv'}")
-print(f"created te-atlas 1000 record csv with: {len(df_for_TE_atlas)} records -> {out_dir / 'glare_test_set_combined_for_TE_atlas_1000_seq.csv'}")
-
-
-
-
-
-
+print(f"created te-atlas 1000 record csv with: {len(df_1000)} records -> {out_dir / 'glare_test_set_combined_for_TE_atlas_1000_seq.csv'}")
