@@ -22,5 +22,5 @@ base = result[0]
 out_file = f"{base}_without_target.csv"
 print(out_file)
 
-df_new.to_csv(out_file, index=False)
+df_new.to_csv(out_file)
 
