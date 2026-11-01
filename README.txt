@@ -77,6 +77,10 @@ This is kind of slow, even with the ~600 sequence test set it took 15 minutes to
 4. Run glare_label_compare.py which takes the output from GLARE and combines it with the labels from
 make_glare_fasta.py and creates a confusion matrix and other statistics.
 
-## Reconstruct dataset using GLARE datasets.
+## Reconstruct dataset for TE-Atlas using GLARE datasets.
 
-1. Download Repbase and PanTEon. 
+1. Download Repbase and PanTEon.  Glare specifies the specific PanTEon version they
+used but not Repbase.
+
+2. Run create_glare_test_set.py -> This script uses GLARE's train/val/test split script
+but also creates csvs in the 
