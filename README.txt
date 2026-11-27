@@ -1,12 +1,28 @@
 # TransposonMachineLearning
 
+This repo contains a number of python scripts which were used for preprocessing transposable element dataset(s) into 
+the formats that are needed for different ML pipelines and models. The training data set is not included in the repo
+due to size but these scripts assume a csv format of Sequence_ID,sequence_content,TE_Order.  The smaller preprosessed test
+set is included under PreprocessedDataSets/FINAL_tester_without_target_full_set.csv.
+
+Some of the scripts prepare the dataset(s) TE-Atlas: https://github.com/mirzaahmadi/TE-Atlas/tree/main.
+The preprocessing performed in TE-Atlas was then used for other ML models.
+
+Other scripts prepare the datasets for Weka: https://sourceforge.net/projects/weka/.
+
+While other scripts prepare the datasets for GLARE: https://code.jgi.doe.gov/NHaas/glare.
+
+There is also a custom LSTM included in this repo.
+
+## Te-Atlas instructions are based on the dataset that was used for this project:
+
 The first thing is to build the maverickpolinton free dataset:
 FINAL_TE_feature_extraction_dataset_without_maverickpolintona.csv as there are not enough
 samples of this class for Random Forrest (and potentially others) to run.
 Build this with csv_split.py
 
-####
-Using TE-Atas to see how RandomForest runs, but also to obtain preprocessed, 
+##
+Using TE-Atas to see how Random Forest runs, but also to obtain preprocessed, 
 feature extacted datasets to be used in Weka:
 
 In order to obtain preprocessed and feature extracted dataset:
@@ -82,5 +98,6 @@ make_glare_fasta.py and creates a confusion matrix and other statistics.
 1. Download Repbase and PanTEon.  Glare specifies the specific PanTEon version they
 used but not Repbase.
 
-2. Run create_glare_test_set.py -> This script uses GLARE's train/val/test split script
-but also creates csvs in the 
+2. Run create_glare_test_set.py -> This script uses GLARE's train/val/test split script 
+to create a combined PanTEon Repbase test set for use with TE-Atlas
+
