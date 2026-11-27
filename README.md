@@ -5,14 +5,14 @@ the formats that are needed for different ML pipelines and models. The training 
 due to size but these scripts assume a csv format of Sequence_ID,sequence_content,TE_Order.  The smaller preprosessed test
 set is included under PreprocessedDataSets/FINAL_tester_without_target_full_set.csv.
 
-Some of the scripts prepare the dataset(s) TE-Atlas: https://github.com/mirzaahmadi/TE-Atlas/tree/main.
+Some of the scripts prepare the dataset(s) for TE-Atlas: https://github.com/mirzaahmadi/TE-Atlas/tree/main.
 The preprocessing performed in TE-Atlas was then used for other ML models.
 
 Other scripts prepare the datasets for Weka: https://sourceforge.net/projects/weka/.
 
 While other scripts prepare the datasets for GLARE: https://code.jgi.doe.gov/NHaas/glare.
 
-There is also a custom LSTM included in this repo.
+There is also a custom LSTM for TE classification included in this repo.
 
 ## Te-Atlas instructions are based on the dataset that was used for this project:
 
