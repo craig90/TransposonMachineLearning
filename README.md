@@ -1,9 +1,6 @@
 # TransposonMachineLearning
 
-This repo contains a number of python scripts which were used for preprocessing transposable element dataset(s) into 
-the formats that are needed for different ML pipelines and models. The training data set is not included in the repo
-due to size but these scripts assume a csv format of Sequence_ID,sequence_content,TE_Order.  The smaller preprosessed test
-set is included under PreprocessedDataSets/FINAL_tester_without_target_full_set.csv.
+This repo contains a number of python scripts which were used for preprocessing transposable element dataset(s) into the formats that are needed for different ML pipelines and models. The training data set is not included in the repo due to size but these scripts assume a csv format of Sequence_ID,sequence_content,TE_Order.  The smaller preprosessed test set is included under PreprocessedDataSets/FINAL_tester_without_target_full_set.csv. 
 
 Some of the scripts prepare the dataset(s) for TE-Atlas: https://github.com/mirzaahmadi/TE-Atlas/tree/main.
 The preprocessing performed in TE-Atlas was then used for other ML models.
@@ -14,11 +11,11 @@ While other scripts prepare the datasets for GLARE: https://code.jgi.doe.gov/NHa
 
 There is also a custom LSTM for TE classification included in this repo.
 
-## Te-Atlas instructions are based on the dataset that was used for this project:
+## Te-Atlas instructions:
 
-The first thing is to build the maverickpolinton free dataset:
-FINAL_TE_feature_extraction_dataset_without_maverickpolintona.csv as there are not enough
-samples of this class for Random Forrest (and potentially others) to run.
+These instructions are based on the dataset I was provided with and the first step will be unecessary with a more balanced dataset:
+The first thing is to create FINAL_TE_feature_extraction_dataset_without_maverickpolinton.csv as there are not enough
+samples of maverick polinton in the dataset for Random Forrest (and potentially others) to run.
 Build this with csv_split.py
 
 ##
@@ -54,8 +51,7 @@ Thankfully the dataset is smaller so feature extraction runs in a reasonable amo
 3. For accuracy info and other metrics, run classify_compare.py script
 
 
-######
-For Weka:
+## For Weka:
 
 1. Training data set needs to have sequences and column nums removed, so we take the preprocessed
 FINAL_TE_feature_extraction_dataset_without_maverickpolinton.csv and run it through 
